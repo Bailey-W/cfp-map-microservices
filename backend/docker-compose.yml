@@ -1,0 +1,16 @@
+services:
+  gateway:
+    build: ./api_gateway/
+    ports:
+      - "8080:8080"
+    networks:
+      - back-tier
+  scraper:
+    build: ./scrape_conferences/
+    ports:
+      - "8082:8082"
+    networks:
+      - back-tier
+
+networks:
+  back-tier: {}

@@ -25,4 +25,8 @@ app.post("/update_ports", (req, res) => {
     });
 });
 
+app.get("/test", (req, res) => {
+  res.status(200).send({ message: "hello!" });
+});
+
 app.listen(PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
