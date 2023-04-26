@@ -21,4 +21,4 @@ def conferences():
     return {'conferences': conference_list}                         # returns the list of conferences
 
 if __name__ == '__main__':
-    app.run(port=8082)
+    app.run(host='0.0.0.0', port=8082)                              # Sets host to 0.0.0.0 for docker binding
