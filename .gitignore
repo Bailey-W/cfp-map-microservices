@@ -132,3 +132,7 @@ dist
 
 # PYTHON STUFF
 __pycache__
+
+
+# CUSTOM STUFF
+*.secret
