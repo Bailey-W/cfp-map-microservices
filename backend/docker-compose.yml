@@ -3,14 +3,25 @@ services:
     build: ./api_gateway/
     ports:
       - "8080:8080"
-    networks:
-      - back-tier
   scraper:
     build: ./scrape_conferences/
     ports:
       - "8082:8082"
-    networks:
-      - back-tier
-
-networks:
-  back-tier: {}
+  conf_db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '8084:3306'
+volumes:
+  conference_db:
+    driver: local
+    driver_opts:
+      o: "size=100m,uid=1000"
+      device: tmpfs
+      type: tmpfs
