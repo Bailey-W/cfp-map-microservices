@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const PORT = process.env.GATEWAY_PORT || 8080;
-const API_MANAGER_PORT = process.env.MANAGER_PORT || 8081;
 
 app.use(express.json());
 
@@ -23,6 +22,12 @@ app.post("/update_ports", (req, res) => {
     .on("error", (err) => {
       res.status(404).send(err);
     });
+});
+
+app.get("/test/db", async (req, res) => {
+  const response = await fetch(`http://backend_conference_store_1:8083/test`);
+  const jsonData = await response.json();
+  res.status(200).send(jsonData);
 });
 
 app.get("/test", (req, res) => {
