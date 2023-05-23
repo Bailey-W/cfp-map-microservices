@@ -6,6 +6,7 @@ const PORT = process.env.GATEWAY_PORT || 8080;
 app.use(express.json());
 
 // Note: This adds additional coupling and should be reworked later
+// Also note: this does not work, and would not work even if the service existed
 app.post("/update_ports", (req, res) => {
   http
     .get(`http://localhost:${API_MANAGER_PORT}/known_ports`, (resp) => {
@@ -24,10 +25,15 @@ app.post("/update_ports", (req, res) => {
     });
 });
 
+// Tests the connection to the "Conference Store" service
 app.get("/test/db", async (req, res) => {
-  const response = await fetch(`http://backend_conference_store_1:8083/test`);
-  const jsonData = await response.json();
-  res.status(200).send(jsonData);
+  try {
+    const response = await fetch(`http://backend_conference_store_1:8083/test`);
+    const jsonData = await response.json();
+    res.status(200).send(jsonData);
+  } catch (err) {
+    res.status(504).send("Error 504: Gateway Timeout");
+  }
 });
 
 app.get("/test", (req, res) => {
